@@ -14,3 +14,19 @@ export const deleteGuest = (id) =>{
         method: 'DELETE'
     })
 }
+
+export const putGuest = (payload) => {
+    const id = payload[0]._id;
+    const newPayload = {};
+        newPayload['checked_in'] = payload[0].checked_in;
+        newPayload['guest_name'] = payload[0].guest_name;
+        newPayload['guest_email'] = payload[0].guest_email;
+
+    return fetch(baseURL + id, {
+        method: 'PUT',
+        body: JSON.stringify(newPayload),
+        headers: {'Content-Type': 'application/json'}
+
+    })
+
+}

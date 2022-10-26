@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import {deleteGuest as apiDeleteGuest} from './components/GuestService';
+import {putGuest} from './components/GuestService';
 
 import './App.css';
 
@@ -35,10 +36,20 @@ const deleteGuest = (id) => {
   })
 }
 
+const checkInGuest = (id) => {
+  const updatedGuest = guests.map((guest) => {
+    return guest._id === id
+    ?{...guest, checked_in: !guest.checked_in} : guest;
+  })
+  setGuests(updatedGuest);
+  const filteredGuest = updatedGuest.filter((guest)=>{return guest._id===id})
+  putGuest(filteredGuest)
+}
+
   return (
     <>
       <GuestForm addGuest={addGuest}/>
-      <GuestList guests={guests} deleteGuest={deleteGuest}/>
+      <GuestList guests={guests} deleteGuest={deleteGuest} checkInGuest={checkInGuest}/>
     </>
   );
 }
